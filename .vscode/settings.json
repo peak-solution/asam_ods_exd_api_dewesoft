@@ -1,0 +1,26 @@
+{
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "files.trimTrailingWhitespace": true,
+  "files.autoSave": "onFocusChange",
+  "flake8.args": [
+    "--max-line-length=119"
+  ],
+  "black-formatter.args": [
+    "--line-length=119"
+  ],
+  "pylint.args": [
+    "--max-line-length=119"
+  ],
+  "python.testing.unittestArgs": [
+    "-v",
+    "-s",
+    "./test",
+    "-p",
+    "test_*.py"
+  ],
+  "python.testing.unittestEnabled": true,
+  "python.analysis.extraPaths": [
+    "./DWDataReaderLib/Win32&64 Python"
+  ]
+}
