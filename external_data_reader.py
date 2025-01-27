@@ -253,47 +253,51 @@ class ExternalDataReader(ods_external_data_pb2_grpc.ExternalDataReader):
             new_channel_values.id = signal_index
             new_channel_values.values.data_type = channel_datatype
 
-            if channel_datatype == ods.DataTypeEnum.DT_BOOLEAN:
-                new_channel_values.values.boolean_array.values.extend(section)
-            elif channel_datatype == ods.DataTypeEnum.DT_BYTE:
-                new_channel_values.values.byte_array.values = section.tobytes()
-            elif channel_datatype == ods.DataTypeEnum.DT_SHORT:
-                new_channel_values.values.long_array.values[:] = section
-            elif channel_datatype == ods.DataTypeEnum.DT_LONG:
-                new_channel_values.values.long_array.values[:] = section
-            elif channel_datatype == ods.DataTypeEnum.DT_LONGLONG:
-                new_channel_values.values.longlong_array.values[:] = section
-            elif channel_datatype == ods.DataTypeEnum.DT_FLOAT:
-                new_channel_values.values.float_array.values[:] = section
-            elif channel_datatype == ods.DataTypeEnum.DT_DOUBLE:
-                new_channel_values.values.double_array.values[:] = section
-            elif channel_datatype == ods.DataTypeEnum.DT_COMPLEX:
-                real_values = []
-                for complex_value in section:
-                    real_values.append(complex_value.real)
-                    real_values.append(complex_value.imag)
-                new_channel_values.values.float_array.values[:] = real_values
-            elif channel_datatype == ods.DataTypeEnum.DT_DCOMPLEX:
-                real_values = []
-                for complex_value in section:
-                    real_values.append(complex_value.real)
-                    real_values.append(complex_value.imag)
-                new_channel_values.values.double_array.values[:] = real_values
-            elif channel_datatype == ods.DataTypeEnum.DT_STRING:
-                new_channel_values.values.string_array.values[:] = section
-            elif channel_datatype == ods.DataTypeEnum.DT_BYTESTR:
-                for item in section:
-                    new_channel_values.values.bytestr_array.values.append(
-                        item.tobytes())
-            else:
-                raise NotImplementedError(
-                    f"Unknown np datatype {section.dtype} for type {
-                        channel_datatype} in {dw_file.name.name}!"
-                )
+            self.__assign_channel_values(
+                channel_datatype, section, new_channel_values)
 
             rv.channels.append(new_channel_values)
 
         return rv
+
+    def __assign_channel_values(self, channel_datatype, section, new_channel_values):
+        if channel_datatype == ods.DataTypeEnum.DT_BOOLEAN:
+            new_channel_values.values.boolean_array.values.extend(section)
+        elif channel_datatype == ods.DataTypeEnum.DT_BYTE:
+            new_channel_values.values.byte_array.values = section.tobytes()
+        elif channel_datatype == ods.DataTypeEnum.DT_SHORT:
+            new_channel_values.values.long_array.values[:] = section
+        elif channel_datatype == ods.DataTypeEnum.DT_LONG:
+            new_channel_values.values.long_array.values[:] = section
+        elif channel_datatype == ods.DataTypeEnum.DT_LONGLONG:
+            new_channel_values.values.longlong_array.values[:] = section
+        elif channel_datatype == ods.DataTypeEnum.DT_FLOAT:
+            new_channel_values.values.float_array.values[:] = section
+        elif channel_datatype == ods.DataTypeEnum.DT_DOUBLE:
+            new_channel_values.values.double_array.values[:] = section
+        elif channel_datatype == ods.DataTypeEnum.DT_COMPLEX:
+            real_values = []
+            for complex_value in section:
+                real_values.append(complex_value.real)
+                real_values.append(complex_value.imag)
+            new_channel_values.values.float_array.values[:] = real_values
+        elif channel_datatype == ods.DataTypeEnum.DT_DCOMPLEX:
+            real_values = []
+            for complex_value in section:
+                real_values.append(complex_value.real)
+                real_values.append(complex_value.imag)
+            new_channel_values.values.double_array.values[:] = real_values
+        elif channel_datatype == ods.DataTypeEnum.DT_STRING:
+            new_channel_values.values.string_array.values[:] = section
+        elif channel_datatype == ods.DataTypeEnum.DT_BYTESTR:
+            for item in section:
+                new_channel_values.values.bytestr_array.values.append(
+                    item.tobytes())
+        else:
+            raise NotImplementedError(
+                f"Unknown np datatype {section.dtype} for type {
+                    channel_datatype} not supported!"
+            )
 
     def GetValuesEx(self, request: exd_api.ValuesExRequest, context: grpc.ServicerContext) -> exd_api.ValuesExResult:
         """

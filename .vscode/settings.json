@@ -19,8 +19,5 @@
     "-p",
     "test_*.py"
   ],
-  "python.testing.unittestEnabled": true,
-  "python.analysis.extraPaths": [
-    "./DWDataReaderLib/Win32&64 Python"
-  ]
+  "python.testing.unittestEnabled": true
 }
