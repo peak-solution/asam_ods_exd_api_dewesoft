@@ -78,3 +78,30 @@ loop Runtime phase
   PODS ->> CLIENT: Return values needed for plot
 end
 ```
+
+## Docker
+
+### Docker Image Details
+
+The Docker image for this project is available at:
+
+`ghcr.io/peak-solution/asam-ods-exd-api-dewesoft:latest`
+
+This image is automatically built and pushed via a GitHub Actions workflow. To pull and run the image:
+
+```
+docker pull ghcr.io/peak-solution/asam-ods-exd-api-dewesoft:latest
+docker run -v /path/to/local/data:/data -p 50051:50051 ghcr.io/peak-solution/asam-ods-exd-api-dewesoft:latest
+```
+
+### Using the Docker Container
+
+To build the Docker image locally:
+```
+docker build -t asam-ods-exd-api-dewesoft .
+```
+
+To start the Docker container:
+```
+docker run -v /path/to/local/data:/data -p 50051:50051 asam-ods-exd-api-dewesoft
+```

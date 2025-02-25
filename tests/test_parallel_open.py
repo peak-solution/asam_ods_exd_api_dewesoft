@@ -1,7 +1,7 @@
 import pathlib
 import unittest
 
-from test.mock_servicer_context import MockServicerContext
+from tests.mock_servicer_context import MockServicerContext
 
 from external_data_reader import ExternalDataReader
 

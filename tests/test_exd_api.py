@@ -4,7 +4,7 @@ import logging
 import pathlib
 import unittest
 
-from test.mock_servicer_context import MockServicerContext
+from tests.mock_servicer_context import MockServicerContext
 
 from google.protobuf.json_format import MessageToJson
 from external_data_reader import ExternalDataReader

@@ -9,7 +9,7 @@ from glob import glob
 import ods_external_data_pb2 as oed
 import ods_pb2 as ods
 from external_data_reader import ExternalDataReader
-from test.mock_servicer_context import MockServicerContext
+from tests.mock_servicer_context import MockServicerContext
 
 
 # pylint: disable=E1101
